@@ -12,3 +12,6 @@ git push origin v0.1.0
 ```
 
 ## Binaries
+`rustsbi-qemu`: simple rustsbi firmware.
+
+`test-kernel`: simple test kernel that goes with rustsbi-qemu.
