@@ -1,0 +1,87 @@
+From 2a1a1ee5ce642433ffc2e09b6ee42a71c47c259b Mon Sep 17 00:00:00 2001
+From: Noe Terrier <noeterrier@proton.me>
+Date: Thu, 29 Aug 2024 15:12:42 +0200
+Subject: [PATCH] Fix start addresses and old macro
+
+---
+ bench-kernel/src/main.rs | 2 +-
+ rustsbi-qemu/build.rs    | 2 +-
+ rustsbi-qemu/src/main.rs | 4 ++--
+ test-kernel/build.rs     | 2 +-
+ test-kernel/src/main.rs  | 2 +-
+ 5 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/bench-kernel/src/main.rs b/bench-kernel/src/main.rs
+index 572dbf3..5660525 100644
+--- a/bench-kernel/src/main.rs
++++ b/bench-kernel/src/main.rs
+@@ -1,6 +1,6 @@
+ #![no_std]
+ #![no_main]
+-#![feature(naked_functions, asm_const)]
++#![feature(naked_functions)]
+ #![deny(warnings)]
+ 
+ use rcore_console::log;
+diff --git a/rustsbi-qemu/build.rs b/rustsbi-qemu/build.rs
+index cf2d732..e806716 100644
+--- a/rustsbi-qemu/build.rs
++++ b/rustsbi-qemu/build.rs
+@@ -12,7 +12,7 @@ const LINKER: &[u8] = b"
+ OUTPUT_ARCH(riscv)
+ ENTRY(_start)
+ MEMORY {
+-    DRAM : ORIGIN = 0x80000000, LENGTH = 2M
++    DRAM : ORIGIN = 0x80200000, LENGTH = 2M
+ }
+ SECTIONS {
+     .text : {
+diff --git a/rustsbi-qemu/src/main.rs b/rustsbi-qemu/src/main.rs
+index faa8472..a442419 100644
+--- a/rustsbi-qemu/src/main.rs
++++ b/rustsbi-qemu/src/main.rs
+@@ -1,6 +1,6 @@
+ #![no_std]
+ #![no_main]
+-#![feature(naked_functions, asm_const)]
++#![feature(naked_functions)]
+ #![deny(warnings)]
+ 
+ mod clint;
+@@ -15,7 +15,7 @@ mod uart16550;
+ 
+ mod constants {
+     /// 特权软件入口。
+-    pub(crate) const SUPERVISOR_ENTRY: usize = 0x8020_0000;
++    pub(crate) const SUPERVISOR_ENTRY: usize = 0x8040_0000;
+     /// 每个硬件线程设置 16KiB 栈空间。
+     pub(crate) const LEN_STACK_PER_HART: usize = 16 * 1024;
+     /// qemu-virt 最多 8 个硬件线程。
+diff --git a/test-kernel/build.rs b/test-kernel/build.rs
+index 2b91cfc..13d9b0d 100644
+--- a/test-kernel/build.rs
++++ b/test-kernel/build.rs
+@@ -12,7 +12,7 @@ const LINKER: &[u8] = b"
+ OUTPUT_ARCH(riscv)
+ ENTRY(_start)
+ MEMORY {
+-    DRAM : ORIGIN = 0x80200000, LENGTH = 64M
++    DRAM : ORIGIN = 0x80400000, LENGTH = 64M
+ }
+ SECTIONS {
+     .text : {
+diff --git a/test-kernel/src/main.rs b/test-kernel/src/main.rs
+index 91743c7..d77076b 100644
+--- a/test-kernel/src/main.rs
++++ b/test-kernel/src/main.rs
+@@ -1,6 +1,6 @@
+ #![no_std]
+ #![no_main]
+-#![feature(naked_functions, asm_const)]
++#![feature(naked_functions)]
+ #![deny(warnings)]
+ 
+ #[macro_use]
+-- 
+2.46.0
+
