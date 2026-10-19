@@ -1,6 +1,6 @@
 # RustSBI Artifact
 
-This repository automates the build of [RustSBI](https://github.com/rustsbi/rustsbi-qemu) for the purpose of generating artifacts that can be use for integration tests in the Miralis project.
+This repository automates the build of [RustSBI](https://github.com/rustsbi/rustsbi) for the purpose of generating artifacts that can be use for integration tests in the Miralis project.
 
 ## How to release new artifacts
 
@@ -12,6 +12,4 @@ git push origin v0.1.0
 ```
 
 ## Binaries
-`rustsbi-qemu`: simple rustsbi firmware.
-
-`test-kernel`: simple test kernel that goes with rustsbi-qemu.
+`rustsbi-prototyper-payload-test`: the RustSBI Prototyper firmware, with the RustSBI test kernel embedded as its payload.

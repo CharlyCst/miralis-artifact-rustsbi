@@ -21,7 +21,5 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            rustsbi-qemu.bin
-            rustsbi-qemu.elf
-            test-kernel.bin
-            test-kernel.elf
+            rustsbi-prototyper-payload-test.bin
+            rustsbi-prototyper-payload-test.elf
